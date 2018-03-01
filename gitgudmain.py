@@ -14,7 +14,11 @@ def open_file(filename):
         w_list = file.readline().split()
         print(w_list)
 
-        city = np.zeros([int(w_list[0]), int(w_list[1])])
+        auto_list = []
+        for line in file:
+            autoline = line.split()
+            auto_list.append(Auto(autoline[]))
+
 
         return Warehouse(
             int(w_list[0]),
@@ -38,9 +42,9 @@ class Warehouse:
 
 
 class Auto:
-    def __init__(self, x, y, es, lf):
-        self.start_x = x
-        self.start_y = y
+    def __init__(self, x, y,fx, fy,es, lf):
+        self.start =  [x, y]
+        self.finish = [fx, fy]
         self.stan = 0
         self.early_start = es
         self.latest_finish = lf
