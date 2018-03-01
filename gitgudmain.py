@@ -56,7 +56,7 @@ class Warehouse:
             self.av_cars.append(Auto(i, 0, 0, None))
 
         self.rides_obj = []
-        self.rides_obj = objrides
+        self.rides_obj = objrides.sort(key=lamba x: x['early_start'])
 
         self.city = np.zeros([x, y])
 
@@ -101,23 +101,19 @@ def main():
         for auto in w.av_cars:
             if auto.ride is None:
                 auto.ride = r
-                #print(auto.ride.start)
 
                 in_x = []
-                in_y = []
 
                 temp = auto.position
                 for i in range(0, abs(auto.position[0] - auto.ride.start[0])):
                     temp[0] = temp[0] + 1
-                    in_x.append(temp)
-                    print(in_x)
+                    in_x.append([temp[0],temp[1]])
 
                 for j in range(0, abs(temp[1] - auto.ride.start[1])):
                     temp[1] = temp[1] + 1
+                    in_x.append([temp[0], temp[1]])
 
-                    in_x.append(temp)
-                    print(in_x)
-
+                auto.start_queue = in_x
                 print(in_x)
 
                 break
