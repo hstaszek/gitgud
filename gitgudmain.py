@@ -3,7 +3,7 @@
 git gud production ;)
 """
 
-import numpy as np
+#import numpy as np
 
 
 def save_file(*args):
@@ -30,7 +30,7 @@ def open_file(filename):
 
         for car in auto_list:
             print(car)
-
+        autolist = auto_list.sort(key=lambda x: int(x.early_start))
         return Warehouse(
             int(w_list[0]),
             int(w_list[1]),
@@ -38,7 +38,7 @@ def open_file(filename):
             int(w_list[3]),
             int(w_list[4]),
             int(w_list[5]),
-            auto_list
+            autolist
         )
 
 
@@ -56,9 +56,9 @@ class Warehouse:
             self.av_cars.append(Auto(i, 0, 0, None))
 
         self.rides_obj = []
-        self.rides_obj = objrides.sort(key=lamba x: x['early_start'])
 
-        self.city = np.zeros([x, y])
+
+        #self.city = np.zeros([x, y])
 
 
 class Ride: # raidy tak naprawde
@@ -93,6 +93,8 @@ def main():
     w = open_file("input/a_example.in")
 
     for T in range(0, w.steps):
+
+        print(w.rides_obj)
         r = w.rides_obj[0]
         for ride in w.rides_obj:
             if r.early_start > ride.early_start:
