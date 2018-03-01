@@ -4,16 +4,21 @@ git gud production ;)
 """
 
 #import numpy as np
+import time
 
-
-def save_file(*args):
-    pass  # TODO
+def save_file(w):
+    with open('fff.out', 'w') as file:
+        for car in w.av_cars:
+            s = ''.join(str(car.assigned_raids))
+            s = str(len(car.assigned_raids)) + ' ' + s
+            file.write(s)
+            file.write('\n')
 
 
 def open_file(filename):
     with open(filename) as file:
         w_list = file.readline().split()
-        print(w_list)
+        #print(w_list)
 
 
         countr = 0
@@ -33,8 +38,8 @@ def open_file(filename):
             countr += 1
 
         auto_list.sort(key=lambda x: x.early_start)
-        for car in auto_list:
-            print(car)
+        #for car in auto_list:
+            #print(car)
 
         return Warehouse(
             int(w_list[0]),
@@ -98,15 +103,17 @@ class Auto:
 
         self.ride = ride
 
+
 def main():
+
+    start_time = time.time()
     print('hello # code')
-    w = open_file("input/c_no_hurry.in")
+    w = open_file("input/e_high_bonus.in")
 
     for T in range(0, w.steps):
 
         #print(T, 'simulation Step')
 
-        for auto in w.av_cars:
         for auto in w.av_cars:
             if len(w.rides_obj) != 0:
 
@@ -134,7 +141,7 @@ def main():
                         in_x.append([temp[0], temp[1]])
 
                     auto.start_queue = in_x
-                    print(in_x)
+                    #print(in_x)
 
 
                     in_x = []
@@ -171,11 +178,8 @@ def main():
 
                 #print(car.position)
 
-
-        for car in w.av_cars:
-
-            s = ''.join(str(car.assigned_raids))
-            print(len(car.assigned_raids), s)
+    save_file(w)
+    print("--- %s seconds ---" % (time.time() - start_time))
 
 
 
