@@ -15,11 +15,14 @@ def open_file(filename):
         w_list = file.readline().split()
         print(w_list)
 
+
+        countr = 0
         auto_list = []
         for line in file:
             al = line.split()
             auto_list.append(
                 Ride(
+                    countr,
                     int(al[0]),
                     int(al[1]),
                     int(al[2]),
@@ -27,6 +30,7 @@ def open_file(filename):
                     int(al[4]),
                     int(al[5])
                 ))
+            countr += 1
 
         auto_list.sort(key=lambda x: x.early_start)
         for car in auto_list:
@@ -54,7 +58,7 @@ class Warehouse:
 
         self.av_cars = []
         for i in range(vehicle):
-            self.av_cars.append(Auto(i, 0, 0, None))
+            self.av_cars.append(Auto(i+1, 0, 0, None))
 
         self.rides_obj = []
         self.rides_obj = objrides
@@ -64,7 +68,9 @@ class Warehouse:
 
 
 class Ride: # raidy tak naprawde
-    def __init__(self, x, y, fx, fy, es, lf):
+    def __init__(self,id, x, y, fx, fy, es, lf):
+        self.ride_id = id
+
         self.start = [x, y]
         self.finish = [fx, fy]
         self.stan = 0
@@ -88,59 +94,69 @@ class Auto:
         self.start_queue = []
         self.finish_queue = []
 
+        self.assigned_raids = []
+
         self.ride = ride
 
 def main():
     print('hello # code')
-    w = open_file("input/a_example.in")
+    w = open_file("input/c_no_hurry.in")
 
     for T in range(0, w.steps):
+
+        #print(T, 'simulation Step')
+
         for auto in w.av_cars:
-            if auto.ride is None:
-                auto.ride = w.rides_obj[0]
-                w.rides_obj.pop(0)
+        for auto in w.av_cars:
+            if len(w.rides_obj) != 0:
 
-                in_x = []
-                count = 1
-                if auto.position[0] - auto.ride.start[0] > 0:
-                    count = -1
+                if auto.ride is None:
+                    auto.ride = w.rides_obj[0]
+                    auto.assigned_raids.append(w.rides_obj[0].ride_id)
+                    w.rides_obj.pop(0)
 
-                temp = auto.position
-                for i in range(0, abs(auto.position[0] - auto.ride.start[0])):
-                    temp[0] = temp[0] + count
-                    in_x.append([temp[0], temp[1]])
+                    in_x = []
+                    count = 1
+                    if auto.position[0] - auto.ride.start[0] > 0:
+                        count = -1
 
-                count = 1
-                if temp[1] - auto.ride.start[1] > 0:
-                    count = -1
+                    temp = auto.position
+                    for i in range(0, abs(auto.position[0] - auto.ride.start[0])):
+                        temp[0] = temp[0] + count
+                        in_x.append([temp[0], temp[1]])
 
-                for j in range(0, abs(temp[1] - auto.ride.start[1])):
-                    temp[1] = temp[1] + count
-                    in_x.append([temp[0], temp[1]])
+                    count = 1
+                    if temp[1] - auto.ride.start[1] > 0:
+                        count = -1
 
-                auto.start_queue = in_x
-                print(in_x)
+                    for j in range(0, abs(temp[1] - auto.ride.start[1])):
+                        temp[1] = temp[1] + count
+                        in_x.append([temp[0], temp[1]])
+
+                    auto.start_queue = in_x
+                    print(in_x)
 
 
-                in_x = []
-                count = 1
-                if temp[0] - auto.ride.finish[0] > 0:
-                    count = -1
+                    in_x = []
+                    count = 1
+                    if temp[0] - auto.ride.finish[0] > 0:
+                        count = -1
 
-                for i in range(0, abs(temp[0] - auto.ride.finish[0])):
-                    temp[0] = temp[0] + count
-                    in_x.append([temp[0], temp[1]])
+                    for i in range(0, abs(temp[0] - auto.ride.finish[0])):
+                        temp[0] = temp[0] + count
+                        in_x.append([temp[0], temp[1]])
 
-                count = 1
-                if temp[1] - auto.ride.finish[1] > 0:
-                    count = -1
+                    count = 1
+                    if temp[1] - auto.ride.finish[1] > 0:
+                        count = -1
 
-                for j in range(0, abs(temp[1] - auto.ride.finish[1])):
-                    temp[1] = temp[1] + count
-                    in_x.append([temp[0], temp[1]])
+                    for j in range(0, abs(temp[1] - auto.ride.finish[1])):
+                        temp[1] = temp[1] + count
+                        in_x.append([temp[0], temp[1]])
 
-                auto.finish_queue = in_x
-                print(in_x)
+                    auto.finish_queue = in_x
+
+                    #print(in_x)
 
         for car in w.av_cars:
             if car.ride is not None:
@@ -150,14 +166,16 @@ def main():
                 elif len(car.finish_queue) is not 0:
                     car.position = car.finish_queue[0]
                     car.finish_queue.pop(0)
+                else:
+                    car.ride = None
 
-                print(car.position)
-
-        '''for auto in w.av_cars:
-            if auto.ride is not None:
-                if'''
+                #print(car.position)
 
 
+        for car in w.av_cars:
+
+            s = ''.join(str(car.assigned_raids))
+            print(len(car.assigned_raids), s)
 
 
 
