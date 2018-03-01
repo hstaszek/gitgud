@@ -10,6 +10,13 @@ def save_file(*args):
 def open_file(*args):
     pass  # TODO
 
+class Auto:
+    def __init__(self, x = 0, y = 0, isDriving = 0):
+        self.x = x
+        self.y = y
+        self.isDriving = isDriving
+
+
 
 def main():
     print('hello # code')
