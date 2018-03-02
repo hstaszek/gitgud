@@ -1,16 +1,18 @@
-"""hash code 2018 -- dominik branch
+"""hash code 2018 -- git gud production ;)"""
 
-git gud production ;)
-"""
-
-#import numpy as np
 import time
+#import numpy
+
 
 def save_file(w):
-    with open('fff.out', 'w') as file:
+    with open('output.out', 'w') as file:
         for car in w.av_cars:
             s = ''.join(str(car.assigned_raids))
             s = str(len(car.assigned_raids)) + ' ' + s
+            #small hack to remove unwanted characters
+            s = s.replace(",", "")
+            s = s.replace("[", "")
+            s = s.replace("]", "")
             file.write(s)
             file.write('\n')
 
@@ -18,8 +20,6 @@ def save_file(w):
 def open_file(filename):
     with open(filename) as file:
         w_list = file.readline().split()
-        #print(w_list)
-
 
         countr = 0
         auto_list = []
@@ -38,8 +38,6 @@ def open_file(filename):
             countr += 1
 
         auto_list.sort(key=lambda x: x.early_start)
-        #for car in auto_list:
-            #print(car)
 
         return Warehouse(
             int(w_list[0]),
@@ -89,6 +87,7 @@ class Ride: # raidy tak naprawde
                + ' ' + str(self.early_start) \
                + ' ' + str(self.latest_finish)
 
+
 class Auto:
     def __init__(self, id,  x , y, ride):
 
@@ -108,11 +107,9 @@ def main():
 
     start_time = time.time()
     print('hello # code')
-    w = open_file("input/e_high_bonus.in")
+    w = open_file("input/a_example.in")
 
     for T in range(0, w.steps):
-
-        #print(T, 'simulation Step')
 
         for auto in w.av_cars:
             if len(w.rides_obj) != 0:
@@ -141,8 +138,6 @@ def main():
                         in_x.append([temp[0], temp[1]])
 
                     auto.start_queue = in_x
-                    #print(in_x)
-
 
                     in_x = []
                     count = 1
@@ -163,8 +158,6 @@ def main():
 
                     auto.finish_queue = in_x
 
-                    #print(in_x)
-
         for car in w.av_cars:
             if car.ride is not None:
                 if len(car.start_queue) is not 0:
@@ -176,11 +169,8 @@ def main():
                 else:
                     car.ride = None
 
-                #print(car.position)
-
     save_file(w)
     print("--- %s seconds ---" % (time.time() - start_time))
-
 
 
 if __name__ == '__main__':
