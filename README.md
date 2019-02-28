@@ -1,5 +1,5 @@
 # gitgud
-Our repository for Google Hashcode 2018
+Our repository for Google Hashcode 2018 and 2019
 Code is far from great, its not perfect but it gave us 34 510 030 points - not that bad for a first time.
 
 ### How to run:
