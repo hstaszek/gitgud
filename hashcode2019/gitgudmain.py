@@ -7,11 +7,10 @@ def read_from_file(path):
 
 if __name__ == '__main__':
     datapaths = {
-        'a': 'data/a_example.txt',
-        'b': 'data/b_lovely_landscapes.txt'
+        'd': 'data/d_pet_pictures.txt'
     }
 
-    filepath = datapaths['b']
+    filepath = datapaths['d']
 
     content = read_from_file(filepath)
     splited_content = content.split(sep='\n')
