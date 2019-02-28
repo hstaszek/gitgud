@@ -2,3 +2,5 @@
 .DS_Store
 ./hashcode2018/input
 ./hashcode2019/data
+*.in
+*.txt
